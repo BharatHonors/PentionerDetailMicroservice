@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using PentionerDetailMicroservice.Model;
+using PentionerDetailMicroservice.Repository;
 using Microsoft.AspNetCore.Authorization;
 using System.Text.Encodings;
 using System.Text;
@@ -14,36 +16,29 @@ namespace PentionerDetailMicroservice.Controllers
     [ApiController]
     public class PentionerDetailController : ControllerBase
     {
-        // GET: api/<PentionerDetailController>
+        private IPentionerDetailsRepo _repo;
+
+        public PentionerDetailController(IPentionerDetailsRepo pentionerDetails)
+        {
+            _repo = pentionerDetails;
+        }
+        ///Getting the details of the pensioner details from csv file by giving Aadhar Number
+        ///Summary
+        /// <returns> pensioner Values</returns>
+
+        // GET: api/PensionerDetail/5
+        [HttpGet("{aadhar}")]
+        public IActionResult PensionerDetailByAadhar(string aadhar)
+        {
+            var  pensioner = _repo.PensionerDetailByAadhar(aadhar);
+            return Ok(pensioner);
+        }
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult PensionerDetails()
         {
-            return new string[] { "value1", "value2" };
+            var pensioner = _repo.PentionerDetails();
+            return Ok(pensioner);
         }
 
-        // GET api/<PentionerDetailController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<PentionerDetailController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<PentionerDetailController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<PentionerDetailController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }
