@@ -37,6 +37,7 @@ namespace PentionerDetailMicroservice.Controllers
             return Ok(pensioner);
         }
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult PensionerDetails()
         {
             var pensioner = _repo.PentionerDetails();

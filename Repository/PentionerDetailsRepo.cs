@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Azure.Storage.Blobs;
+
 namespace PentionerDetailMicroservice.Repository
 {
     public class PentionerDetailsRepo : IPentionerDetailsRepo
@@ -29,7 +31,11 @@ namespace PentionerDetailMicroservice.Repository
             {
                 //string csvConn = configuration.GetValue<string>("MySettings:CsvConnection");  // Initializing the csvConn  for the File path
                 //string csvConn = "details.csv";
-                using (StreamReader sr = new StreamReader("details.csv"))
+                BlobContainerClient container = new BlobContainerClient( "DefaultEndpointsProtocol=https;AccountName=pentionerdetails;AccountKey=54GvYqooey7q8j0+6qQdA6HptnBw3tff7G99YN07lXzKvJ+n+j51K3/LGa4LJQhKD5Hgvg9RSC23+AStIdtBQw==;EndpointSuffix=core.windows.net", "pentionerdetails");
+                var blob = container.GetBlobClient("details.csv");
+                
+                
+                using (StreamReader sr = new StreamReader(blob.OpenRead()))
                 {
                     string line;
                     while ((line = sr.ReadLine()) != null)
