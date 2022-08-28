@@ -29,7 +29,7 @@ namespace PentionerDetailMicroservice.Repository
             {
                 //string csvConn = configuration.GetValue<string>("MySettings:CsvConnection");  // Initializing the csvConn  for the File path
                 //string csvConn = "details.csv";
-                using (StreamReader sr = new StreamReader(@"Data\details.csv"))
+                using (StreamReader sr = new StreamReader("details.csv"))
                 {
                     string line;
                     while ((line = sr.ReadLine()) != null)
