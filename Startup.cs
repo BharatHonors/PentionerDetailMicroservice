@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Text.Encodings;
-
+using PentionerDetailMicroservice.Repository;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -35,7 +35,7 @@ namespace PentionerDetailMicroservice
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-
+            services.AddTransient<IPentionerDetailsRepo, PentionerDetailsRepo>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                  .AddJwtBearer(options =>
                  {
@@ -96,7 +96,7 @@ namespace PentionerDetailMicroservice
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseAuthentication();    
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

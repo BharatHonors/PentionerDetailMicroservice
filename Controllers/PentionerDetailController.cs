@@ -8,12 +8,14 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace PentionerDetailMicroservice.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class PentionerDetailController : ControllerBase
     {
         private IPentionerDetailsRepo _repo;
@@ -28,6 +30,7 @@ namespace PentionerDetailMicroservice.Controllers
 
         // GET: api/PensionerDetail/5
         [HttpGet("{aadhar}")]
+        
         public IActionResult PensionerDetailByAadhar(string aadhar)
         {
             var  pensioner = _repo.PensionerDetailByAadhar(aadhar);
